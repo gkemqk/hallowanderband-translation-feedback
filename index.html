@@ -4,19 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hallowanderband Translation Feedback</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
+    @import url('https://fonts.googleapis.com/css?family=Rubik:700&display=swap');
+
     :root {
       --bg: #1b2838;
-      --panel: #223244;
-      --panel-strong: #16202d;
-      --field: #101822;
-      --line: #31465d;
-      --line-focus: #66c0f4;
-      --text: #dfe7f1;
-      --muted: #9fb1c3;
-      --button-top: #66c0f4;
-      --button-bottom: #417a9b;
-      --button-text: #07131d;
+      --panel: rgba(36, 22, 49, 0.94);
+      --panel-bottom: rgba(27, 40, 56, 0.96);
+      --field: #fff7fb;
+      --field-readonly: #fff0f0;
+      --line: #b18597;
+      --line-focus: #ff6aba;
+      --text: #fff9fd;
+      --ink: #382b22;
+      --muted: #ffd6e5;
+      --light-pink: #fff0f0;
+      --pink: #ffe9e9;
+      --dark-pink: #f9c4d2;
+      --pink-border: #b18597;
+      --pink-shadow: #ffe3e2;
       --error: #ffb3b3;
       --success: #b7f5c2;
     }
@@ -29,30 +36,90 @@
     body {
       margin: 0;
       min-height: 100%;
-      background: var(--bg);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px 14px;
+      background:
+        linear-gradient(180deg, rgba(20, 10, 34, 0.24), rgba(8, 14, 24, 0.68)),
+        url("assets/bg-feedback.png") center / cover fixed no-repeat,
+        var(--bg);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.36), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.36)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.44));
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .brand-logo {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: min(360px, 76vw);
+      height: auto;
+      margin: 0 auto -28px;
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5));
     }
 
     main {
+      position: relative;
+      z-index: 2;
       width: 100%;
-      max-width: 600px;
       margin: 0 auto;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      padding: 42px 28px 26px;
+      border: 2px solid rgba(255, 180, 220, 0.78);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 104, 188, 0.1), rgba(0, 0, 0, 0)),
+        linear-gradient(180deg, var(--panel), var(--panel-bottom));
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+    }
+
+    .card-layout {
+      display: block;
+    }
+
+    .form-area {
+      min-width: 0;
+    }
+
+    .character-art {
+      display: block;
+      position: fixed;
+      right: max(18px, calc((100vw - 980px) / 2));
+      bottom: 8px;
+      z-index: 1;
+      width: min(380px, 36vw);
+      height: auto;
+      pointer-events: none;
+      filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
     }
 
     h1 {
       margin: 0 0 8px;
-      font-size: 22px;
+      color: #fff8fb;
+      font-size: 24px;
       line-height: 1.25;
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
     }
 
     p {
@@ -65,8 +132,10 @@
     label {
       display: block;
       margin: 18px 0 8px;
+      color: #ffe6f0;
       font-size: 14px;
       font-weight: 700;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
     }
 
     textarea {
@@ -77,37 +146,69 @@
       max-height: 120px !important;
       resize: none !important;
       overflow-y: auto;
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
       outline: none;
       background: var(--field);
-      color: var(--text);
+      color: var(--ink);
       padding: 12px;
       font: 15px/1.45 Arial, Helvetica, sans-serif;
       white-space: pre-wrap;
+      box-shadow:
+        0 5px 0 rgba(83, 43, 66, 0.55),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.45);
     }
 
     textarea:focus {
       border-color: var(--line-focus);
-      box-shadow: 0 0 0 2px rgba(102, 192, 244, 0.18);
+      box-shadow:
+        0 5px 0 rgba(83, 43, 66, 0.55),
+        0 0 0 3px rgba(255, 106, 186, 0.22),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.45);
     }
 
     textarea[readonly] {
-      background: var(--panel-strong);
-      color: #c8d6e5;
+      background: var(--field-readonly);
+      color: var(--ink);
     }
 
     button {
+      position: relative;
+      display: inline-block;
       width: 100%;
       margin-top: 20px;
-      padding: 13px 16px;
+      padding: 1.15em 2em;
       border: 0;
-      border-radius: 6px;
-      background: linear-gradient(180deg, var(--button-top), var(--button-bottom));
-      color: var(--button-text);
+      border: 2px solid var(--pink-border);
+      border-radius: 0.75em;
+      outline: none;
+      background: var(--light-pink);
+      color: var(--ink);
       font-size: 16px;
+      font-family: "Rubik", Arial, Helvetica, sans-serif;
       font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      vertical-align: middle;
       cursor: pointer;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.26) inset;
+      transition:
+        transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        background 150ms cubic-bezier(0, 0, 0.58, 1);
+    }
+
+    button::before {
+      display: none;
+    }
+
+    button:hover {
+      background: var(--pink);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      background: var(--pink);
+      transform: translateY(1px);
     }
 
     button:disabled {
@@ -121,6 +222,7 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.4;
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
     }
 
     .status.error {
@@ -137,38 +239,80 @@
       height: 0;
       border: 0;
     }
+
+    @media (min-width: 900px) {
+      body {
+        justify-content: flex-start;
+        padding-left: clamp(20px, 8vw, 110px);
+        padding-right: 330px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        align-items: flex-start;
+        padding: 14px 12px 22px;
+      }
+
+      .brand-logo {
+        width: min(330px, 82vw);
+        margin-bottom: -24px;
+      }
+
+      main {
+        padding: 38px 18px 22px;
+      }
+
+      .character-art {
+        right: -12px;
+        bottom: -4px;
+        width: min(270px, 58vw);
+        opacity: 0.76;
+      }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Translation Feedback</h1>
-    <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
+  <div class="page-shell">
+    <img class="brand-logo" src="assets/logo-hallowanderband.png" alt="Hallowanderband">
 
-    <form
-      id="feedbackForm"
-      action="https://docs.google.com/forms/d/e/1FAIpQLScEvQ6uodP99uom6T4WwziKI_2lnnA0EKOSvDhf64i7ZYbKCg/formResponse"
-      method="POST"
-      target="submitFrame"
-    >
-      <input id="metaInput" type="hidden" name="entry.719413114" value="">
+    <main>
+      <div class="card-layout">
+        <section class="form-area" aria-labelledby="pageTitle">
+          <h1 id="pageTitle">Translation Feedback</h1>
+          <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
 
-      <label for="reportedLine">Reported Line</label>
-      <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
+          <form
+            id="feedbackForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLScEvQ6uodP99uom6T4WwziKI_2lnnA0EKOSvDhf64i7ZYbKCg/formResponse"
+            method="POST"
+            target="submitFrame"
+          >
+            <input id="metaInput" type="hidden" name="entry.719413114" value="">
 
-      <label for="feedback">Your Feedback</label>
-      <textarea
-        id="feedback"
-        name="entry.1985870251"
-        required
-        placeholder="Write the corrected translation or what felt wrong."
-      ></textarea>
+            <label for="reportedLine">Reported Line</label>
+            <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
 
-      <button id="submitButton" type="submit">Submit Feedback</button>
-      <div id="status" class="status"></div>
-    </form>
+            <label for="feedback">Your Feedback</label>
+            <textarea
+              id="feedback"
+              name="entry.1985870251"
+              required
+              placeholder="Write the corrected translation or what felt wrong."
+            ></textarea>
 
-    <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
-  </main>
+            <button id="submitButton" type="submit">Submit Feedback</button>
+            <div id="status" class="status"></div>
+          </form>
+        </section>
+
+      </div>
+
+      <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
+    </main>
+
+    <img class="character-art" src="assets/character-feedback.png" alt="">
+  </div>
 
   <script>
     (function () {
