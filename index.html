@@ -115,10 +115,10 @@
     .character-art {
       display: block;
       position: fixed;
-      right: max(18px, calc((100vw - 980px) / 2));
-      bottom: 8px;
-      z-index: 1;
-      width: min(380px, 36vw);
+      right: clamp(-170px, -12vw, -90px);
+      bottom: -4px;
+      z-index: 3;
+      width: min(360px, 34vw);
       height: auto;
       pointer-events: none;
       filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
@@ -259,7 +259,7 @@
 
     .status {
       min-height: 20px;
-      margin-top: 14px;
+      margin-top: 20px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.4;
@@ -297,9 +297,9 @@
       }
 
       .character-art {
-        right: -12px;
-        bottom: -4px;
-        width: min(270px, 58vw);
+        right: -150px;
+        bottom: -18px;
+        width: min(260px, 58vw);
         opacity: 0.76;
       }
     }
@@ -326,7 +326,7 @@
             <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
             <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
 
-            <label for="feedback">Your Feedback</label>
+            <label for="feedback">★ Your Feedback</label>
             <textarea
               id="feedback"
               name="entry.1985870251"
