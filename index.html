@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hallowanderband Translation Feedback</title>
+  <style>
+    :root {
+      --bg: #1b2838;
+      --panel: #223244;
+      --panel-strong: #16202d;
+      --field: #101822;
+      --line: #31465d;
+      --line-focus: #66c0f4;
+      --text: #dfe7f1;
+      --muted: #9fb1c3;
+      --button-top: #66c0f4;
+      --button-bottom: #417a9b;
+      --button-text: #07131d;
+      --error: #ffb3b3;
+      --success: #b7f5c2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      padding: 24px 14px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      height: 120px !important;
+      min-height: 120px !important;
+      max-height: 120px !important;
+      resize: none !important;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      outline: none;
+      background: var(--field);
+      color: var(--text);
+      padding: 12px;
+      font: 15px/1.45 Arial, Helvetica, sans-serif;
+      white-space: pre-wrap;
+    }
+
+    textarea:focus {
+      border-color: var(--line-focus);
+      box-shadow: 0 0 0 2px rgba(102, 192, 244, 0.18);
+    }
+
+    textarea[readonly] {
+      background: var(--panel-strong);
+      color: #c8d6e5;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 6px;
+      background: linear-gradient(180deg, var(--button-top), var(--button-bottom));
+      color: var(--button-text);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .status {
+      min-height: 20px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .status.error {
+      color: var(--error);
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    iframe {
+      display: none;
+      width: 0;
+      height: 0;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Translation Feedback</h1>
+    <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
+
+    <form
+      id="feedbackForm"
+      action="https://docs.google.com/forms/d/e/1FAIpQLScEvQ6uodP99uom6T4WwziKI_2lnnA0EKOSvDhf64i7ZYbKCg/formResponse"
+      method="POST"
+      target="submitFrame"
+    >
+      <input id="metaInput" type="hidden" name="entry.719413114" value="">
+
+      <label for="reportedLine">Reported Line</label>
+      <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
+
+      <label for="feedback">Your Feedback</label>
+      <textarea
+        id="feedback"
+        name="entry.1985870251"
+        required
+        placeholder="Write the corrected translation or what felt wrong."
+      ></textarea>
+
+      <button id="submitButton" type="submit">Submit Feedback</button>
+      <div id="status" class="status"></div>
+    </form>
+
+    <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
+  </main>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var meta = normalizeText(params.get("meta") || "");
+      var text = normalizeText(params.get("text") || "");
+
+      var metaInput = document.getElementById("metaInput");
+      var reportedLine = document.getElementById("reportedLine");
+      var form = document.getElementById("feedbackForm");
+      var button = document.getElementById("submitButton");
+      var status = document.getElementById("status");
+      var submitFrame = document.getElementById("submitFrame");
+      var submitted = false;
+
+      metaInput.value = meta;
+      reportedLine.value = text;
+
+      if (!meta || !text) {
+        status.textContent = "Some report data is missing. You can still submit feedback.";
+        status.className = "status error";
+      }
+
+      form.addEventListener("submit", function () {
+        submitted = true;
+        button.disabled = true;
+        status.textContent = "Submitting...";
+        status.className = "status";
+      });
+
+      submitFrame.addEventListener("load", function () {
+        if (!submitted) {
+          return;
+        }
+
+        status.textContent = "Thank you. Your feedback has been submitted.";
+        status.className = "status success";
+      });
+
+      function normalizeText(value) {
+        return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+      }
+    })();
+  </script>
+</body>
+</html>
