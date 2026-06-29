@@ -76,6 +76,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
+      min-width: 0;
       max-width: 720px;
     }
 
@@ -94,6 +95,7 @@
       position: relative;
       z-index: 2;
       width: 100%;
+      min-width: 0;
       margin: 0 auto;
       padding: 92px 32px 34px;
       border: 5px solid #09080b;
@@ -120,15 +122,23 @@
       position: absolute;
       width: 112px;
       height: 52px;
-      border: 5px solid #081947;
-      border-right: 0;
+      border: 0;
+      background: #081947;
       clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%, 24% 50%);
+    }
+
+    .panel-ribbon::before {
+      position: absolute;
+      inset: 5px 0 5px 5px;
+      content: "";
+      background: var(--ribbon-fill);
+      clip-path: inherit;
     }
 
     .panel-ribbon-mint {
       left: 0;
       top: 0;
-      background: linear-gradient(135deg, #f8ffbd 0 36%, #55d5d2 37%);
+      --ribbon-fill: linear-gradient(135deg, #f8ffbd 0 36%, #55d5d2 37%);
       transform: rotate(-5deg);
     }
 
@@ -137,7 +147,7 @@
       top: 72px;
       width: 112px;
       height: 48px;
-      background: linear-gradient(135deg, #fff7a8 0 38%, #ffd35d 39%);
+      --ribbon-fill: linear-gradient(135deg, #fff7a8 0 38%, #ffd35d 39%);
       clip-path: none;
       transform: rotate(-8deg);
     }
@@ -245,6 +255,21 @@
       color: #fff7fb;
     }
 
+    form.is-submitted #feedback {
+      border-color: #76518f;
+      background: rgba(34, 21, 48, 0.94);
+      color: #fff7fb;
+      cursor: default;
+      pointer-events: none;
+      box-shadow:
+        0 5px 0 rgba(18, 12, 28, 0.7),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+
+    form.is-submitted #feedback::placeholder {
+      color: transparent;
+    }
+
     button {
       position: relative;
       display: inline-block;
@@ -306,8 +331,163 @@
     }
 
     button:disabled {
-      opacity: 0.55;
+      opacity: 1;
       cursor: default;
+    }
+
+    button:disabled,
+    button:disabled:hover,
+    button:disabled:active {
+      background: var(--button-face);
+      cursor: default;
+      transform: none;
+    }
+
+    button:disabled::before,
+    button:disabled:hover::before,
+    button:disabled:active::before {
+      box-shadow: 0 0 0 2px var(--button-border), 0 0.55em 0 0 var(--button-shadow);
+      transform: translate3d(0, 0.62em, -1em);
+    }
+
+    button.is-submitting:disabled,
+    button.is-submitting:disabled:hover,
+    button.is-submitting:disabled:active {
+      opacity: 1;
+      background: var(--button-face);
+      transform: none;
+    }
+
+    button.is-submitting:disabled::before,
+    button.is-submitting:disabled:hover::before,
+    button.is-submitting:disabled:active::before {
+      box-shadow: 0 0 0 2px var(--button-border), 0 0.55em 0 0 var(--button-shadow);
+      transform: translate3d(0, 0.62em, -1em);
+    }
+
+    button.is-complete:disabled,
+    button.is-complete:disabled:hover,
+    button.is-complete:disabled:active {
+      opacity: 1;
+      border-color: #85d59d;
+      background: #2f8f55;
+      color: #f4fff8;
+      transform: none;
+    }
+
+    button.is-complete:disabled::before,
+    button.is-complete:disabled:hover::before,
+    button.is-complete:disabled:active::before {
+      background: #15592f;
+      box-shadow: 0 0 0 2px #85d59d, 0 0.55em 0 0 rgba(17, 78, 40, 0.72);
+      transform: translate3d(0, 0.62em, -1em);
+    }
+
+    button.close-button {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      --close-button-font-size: 23px;
+      --close-button-face-height: 30px;
+      --close-button-depth: 9px;
+      --close-button-face-offset: 0px;
+      width: 54px;
+      height: 39px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      font-size: 0;
+      line-height: 1;
+      isolation: isolate;
+      overflow: visible;
+      text-transform: none;
+    }
+
+    button.close-button::before,
+    button.close-button::after {
+      position: absolute;
+      left: 0;
+      right: 0;
+      content: "";
+      width: auto;
+      height: var(--close-button-face-height);
+      border: 2px solid var(--button-border);
+      border-radius: 8px;
+      transform: none;
+    }
+
+    button.close-button::before {
+      top: var(--close-button-depth);
+      z-index: 0;
+      background: var(--button-base);
+      box-shadow: 0 5px 0 rgba(24, 7, 39, 0.72);
+    }
+
+    button.close-button::after {
+      top: 0;
+      z-index: 1;
+      background: var(--button-face);
+      transform: translateY(var(--close-button-face-offset));
+      transition:
+        transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        background 150ms cubic-bezier(0, 0, 0.58, 1);
+    }
+
+    .close-button-label {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      line-height: var(--close-button-face-height);
+      transform: translateY(calc(var(--close-button-face-offset) - 1px));
+      transition: transform 150ms cubic-bezier(0, 0, 0.58, 1);
+      pointer-events: none;
+    }
+
+    .close-button-icon {
+      display: block;
+      width: var(--close-button-font-size);
+      height: var(--close-button-font-size);
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    button.close-button:hover {
+      background: transparent;
+      --close-button-face-offset: 2px;
+      transform: none;
+    }
+
+    button.close-button:hover::before {
+      transform: none;
+    }
+
+    button.close-button:hover::after {
+      background: var(--button-face-hover);
+    }
+
+    button.close-button:active {
+      background: transparent;
+      --close-button-face-offset: var(--close-button-depth);
+      transform: none;
+    }
+
+    button.close-button:active::before {
+      transform: none;
+    }
+
+    button.close-button:active::after {
+      background: var(--button-face-hover);
     }
 
     .status {
@@ -347,6 +527,9 @@
       }
 
       .page-shell {
+        width: min(100%, 430px);
+        max-width: calc(100vw - 16px);
+        margin: 0 auto;
         transform: none;
       }
 
@@ -358,8 +541,20 @@
 
       .panel-frame {
         width: 100%;
+        max-width: 100%;
         margin-left: 0;
-        padding: 76px 18px 26px;
+        padding: 76px 16px 26px;
+      }
+
+      button.close-button {
+        top: 10px;
+        right: 14px;
+        --close-button-font-size: 21px;
+        --close-button-face-height: 29px;
+        --close-button-depth: 8px;
+        width: 52px;
+        height: 37px;
+        border-radius: 8px;
       }
 
       .panel-ribbons {
@@ -403,6 +598,14 @@
     </div>
 
     <div class="panel-frame">
+      <button id="closeButton" class="close-button" type="button" aria-label="Close">
+        <span class="close-button-label" aria-hidden="true">
+          <svg class="close-button-icon" viewBox="0 0 24 24" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </span>
+      </button>
+
       <main>
         <div class="card-layout">
           <section class="form-area" aria-labelledby="pageTitle">
@@ -458,8 +661,10 @@
       var partialResponseInput = document.getElementById("partialResponseInput");
       var fbzxInput = document.getElementById("fbzxInput");
       var reportedLine = document.getElementById("reportedLine");
+      var feedback = document.getElementById("feedback");
       var form = document.getElementById("feedbackForm");
       var button = document.getElementById("submitButton");
+      var closeButton = document.getElementById("closeButton");
       var status = document.getElementById("status");
       var submitFrame = document.getElementById("submitFrame");
       var submitted = false;
@@ -473,12 +678,24 @@
         status.className = "status error";
       }
 
-      form.addEventListener("submit", function () {
+      form.addEventListener("submit", function (event) {
+        if (submitted) {
+          event.preventDefault();
+          return;
+        }
+
         prepareGoogleFormSubmissionToken();
         submitted = true;
         button.disabled = true;
+        button.classList.add("is-submitting");
+        button.classList.remove("is-complete");
+        button.textContent = "Submit Feedback";
         status.textContent = "Submitting...";
         status.className = "status";
+      });
+
+      closeButton.addEventListener("click", function () {
+        closeReportWindow();
       });
 
       submitFrame.addEventListener("load", function () {
@@ -486,6 +703,14 @@
           return;
         }
 
+        button.classList.remove("is-submitting");
+        button.classList.add("is-complete");
+        button.textContent = "Complete";
+        form.classList.add("is-submitted");
+        feedback.readOnly = true;
+        feedback.setAttribute("aria-disabled", "true");
+        feedback.tabIndex = -1;
+        feedback.blur();
         status.textContent = "Thank you. Your feedback has been submitted.";
         status.className = "status success";
       });
@@ -507,6 +732,16 @@
         }
 
         return Math.random() < 0.5 ? "-" + token : token;
+      }
+
+      function closeReportWindow() {
+        window.open("", "_self");
+        window.close();
+
+        window.setTimeout(function () {
+          status.textContent = "Thank you. You can close this window.";
+          status.className = "status success";
+        }, 250);
       }
     })();
   </script>
