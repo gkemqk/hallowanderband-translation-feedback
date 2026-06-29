@@ -115,10 +115,10 @@
     .character-art {
       display: block;
       position: fixed;
-      right: clamp(-170px, -12vw, -90px);
-      bottom: -4px;
+      right: max(18px, calc((100vw - 980px) / 2));
+      bottom: 8px;
       z-index: 3;
-      width: min(360px, 34vw);
+      width: min(380px, 36vw);
       height: auto;
       pointer-events: none;
       filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
@@ -297,9 +297,9 @@
       }
 
       .character-art {
-        right: -150px;
-        bottom: -18px;
-        width: min(260px, 58vw);
+        right: -12px;
+        bottom: -4px;
+        width: min(270px, 58vw);
         opacity: 0.76;
       }
     }
