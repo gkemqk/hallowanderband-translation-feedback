@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobile Layout Test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #111923;
+      color: #f4edf7;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: #b9aeca;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .device {
+      padding: 10px;
+      border: 1px solid #3d2b50;
+      border-radius: 10px;
+      background: #1d1427;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+    }
+
+    .device-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 8px;
+      color: #fbe6ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    iframe {
+      display: block;
+      border: 0;
+      border-radius: 4px;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mobile Layout Test</h1>
+  <p>Local preview frames for <code>index.html</code>. This file is only for layout checks.</p>
+
+  <div class="grid">
+    <section class="device">
+      <div class="device-title">
+        <span>Compact</span>
+        <span>360 x 740</span>
+      </div>
+      <iframe
+        width="360"
+        height="740"
+        src="index.html?meta=1.0%20%2F%20ko%20%2F%20NodeA%20%2F%20None&amp;text=Line%201%0ALine%202"
+        title="Compact mobile preview"
+      ></iframe>
+    </section>
+
+    <section class="device">
+      <div class="device-title">
+        <span>Steam Overlay Small</span>
+        <span>430 x 760</span>
+      </div>
+      <iframe
+        width="430"
+        height="760"
+        src="index.html?meta=1.0%20%2F%20ko%20%2F%20NodeA%20%2F%20None&amp;text=Line%201%0ALine%202"
+        title="Steam overlay small preview"
+      ></iframe>
+    </section>
+
+    <section class="device">
+      <div class="device-title">
+        <span>Empty Line Case</span>
+        <span>430 x 760</span>
+      </div>
+      <iframe
+        width="430"
+        height="760"
+        src="index.html?meta=1.0%20%2F%20ko%20%2F%20NodeA%20%2F%20None&amp;text="
+        title="Empty reported line preview"
+      ></iframe>
+    </section>
+  </div>
+</body>
+</html>

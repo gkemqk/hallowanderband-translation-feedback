@@ -36,12 +36,6 @@
       --button-shadow: rgba(24, 7, 39, 0.72);
       --error: #ffb3b3;
       --success: #b7f5c2;
-      --panel-width: 652px;
-      --panel-height: 763px;
-      --slice-left: 240px;
-      --slice-right: 259px;
-      --slice-top: 355px;
-      --slice-bottom: 293px;
     }
 
     * {
@@ -52,6 +46,7 @@
     body {
       margin: 0;
       min-height: 100%;
+      overflow-x: hidden;
       color: var(--text);
       font-family: "Simple", Arial, Helvetica, sans-serif;
     }
@@ -80,85 +75,75 @@
     .page-shell {
       position: relative;
       z-index: 1;
-      width: var(--panel-width);
-      max-width: none;
+      width: 100%;
+      max-width: 720px;
     }
 
     .brand-logo {
       position: relative;
       z-index: 5;
       display: block;
-      width: 300px;
+      width: min(330px, 66vw);
       height: auto;
-      margin: 0 auto -78px;
-      transform: translateX(18px);
+      margin: 0 auto -88px;
+      transform: translateX(10px);
       filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5));
     }
 
     .panel-frame {
       position: relative;
       z-index: 2;
-      width: var(--panel-width);
-      height: var(--panel-height);
+      width: 100%;
+      margin: 0 auto;
+      padding: 92px 32px 34px;
+      border: 5px solid #09080b;
+      border-radius: 20px 16px 22px 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.08)),
+        #2f2f30;
+      box-shadow:
+        0 20px 46px rgba(0, 0, 0, 0.5),
+        0 0 0 5px #c936d1,
+        inset 0 0 0 4px rgba(0, 0, 0, 0.5),
+        inset 0 -8px 0 rgba(0, 0, 0, 0.22);
     }
 
-    .panel-slices {
+    .panel-ribbons {
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: var(--slice-left) 1fr var(--slice-right);
-      grid-template-rows: var(--slice-top) 1fr var(--slice-bottom);
+      left: -72px;
+      top: 108px;
+      z-index: -1;
       pointer-events: none;
     }
 
-    .panel-slice {
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
+    .panel-ribbon {
+      position: absolute;
+      width: 112px;
+      height: 52px;
+      border: 5px solid #081947;
+      border-right: 0;
+      clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%, 24% 50%);
     }
 
-    .panel-tl {
-      background-image: url("assets/panel-slices/panel-tl.png");
+    .panel-ribbon-mint {
+      left: 0;
+      top: 0;
+      background: linear-gradient(135deg, #f8ffbd 0 36%, #55d5d2 37%);
+      transform: rotate(-5deg);
     }
 
-    .panel-t {
-      background-image: url("assets/panel-slices/panel-t.png");
-    }
-
-    .panel-tr {
-      background-image: url("assets/panel-slices/panel-tr.png");
-    }
-
-    .panel-l {
-      background-image: url("assets/panel-slices/panel-l.png");
-    }
-
-    .panel-c {
-      background-image: url("assets/panel-slices/panel-c.png");
-    }
-
-    .panel-r {
-      background-image: url("assets/panel-slices/panel-r.png");
-    }
-
-    .panel-bl {
-      background-image: url("assets/panel-slices/panel-bl.png");
-    }
-
-    .panel-b {
-      background-image: url("assets/panel-slices/panel-b.png");
-    }
-
-    .panel-br {
-      background-image: url("assets/panel-slices/panel-br.png");
+    .panel-ribbon-yellow {
+      left: 5px;
+      top: 72px;
+      width: 112px;
+      height: 48px;
+      background: linear-gradient(135deg, #fff7a8 0 38%, #ffd35d 39%);
+      clip-path: none;
+      transform: rotate(-8deg);
     }
 
     main {
-      position: absolute;
-      left: 118px;
-      top: 142px;
-      right: 66px;
-      bottom: 76px;
+      position: relative;
       z-index: 2;
       margin: 0;
       padding: 0;
@@ -175,11 +160,11 @@
 
     .character-art {
       display: block;
-      position: absolute;
-      right: -205px;
-      bottom: 4px;
+      position: fixed;
+      right: max(18px, calc((100vw - 720px) / 2 - 90px));
+      bottom: 8px;
       z-index: 3;
-      width: 290px;
+      width: 340px;
       height: auto;
       pointer-events: none;
       filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
@@ -264,7 +249,7 @@
       position: relative;
       display: inline-block;
       width: 100%;
-      margin-top: 20px;
+      margin-top: 30px;
       padding: 1.15em 2em;
       border: 0;
       border: 2px solid var(--button-border);
@@ -351,47 +336,51 @@
 
     @media (min-width: 900px) {
       .page-shell {
-        transform: translateX(-74px);
+        transform: translateX(-42px);
       }
     }
 
     @media (max-width: 720px) {
-      :root {
-        --panel-width: 500px;
-        --panel-height: 586px;
-        --slice-left: 184px;
-        --slice-right: 199px;
-        --slice-top: 273px;
-        --slice-bottom: 225px;
-      }
-
       body {
         align-items: flex-start;
         padding: 14px 12px 22px;
       }
 
       .page-shell {
-        transform: translateX(-78px);
+        transform: none;
       }
 
       .brand-logo {
-        width: 230px;
-        margin-bottom: -60px;
-        transform: translateX(16px);
+        width: min(270px, 70vw);
+        margin-bottom: -72px;
+        transform: translateX(8px);
       }
 
-      main {
-        left: 90px;
-        top: 112px;
-        right: 48px;
-        bottom: 56px;
+      .panel-frame {
+        width: 100%;
+        margin-left: 0;
+        padding: 76px 18px 26px;
+      }
+
+      .panel-ribbons {
+        left: -34px;
+        top: 94px;
+      }
+
+      .panel-ribbon-mint {
+        width: 72px;
+        height: 38px;
+      }
+
+      .panel-ribbon-yellow {
+        left: 5px;
+        top: 58px;
+        width: 72px;
+        height: 34px;
       }
 
       .character-art {
-        right: -130px;
-        bottom: -2px;
-        width: 220px;
-        opacity: 0.76;
+        display: none;
       }
 
       h1 {
@@ -408,19 +397,12 @@
   <div class="page-shell">
     <img class="brand-logo" src="assets/logo-clip.png" alt="Hallowanderband">
 
-    <div class="panel-frame">
-      <div class="panel-slices" aria-hidden="true">
-        <div class="panel-slice panel-tl"></div>
-        <div class="panel-slice panel-t"></div>
-        <div class="panel-slice panel-tr"></div>
-        <div class="panel-slice panel-l"></div>
-        <div class="panel-slice panel-c"></div>
-        <div class="panel-slice panel-r"></div>
-        <div class="panel-slice panel-bl"></div>
-        <div class="panel-slice panel-b"></div>
-        <div class="panel-slice panel-br"></div>
-      </div>
+    <div class="panel-ribbons" aria-hidden="true">
+      <div class="panel-ribbon panel-ribbon-mint"></div>
+      <div class="panel-ribbon panel-ribbon-yellow"></div>
+    </div>
 
+    <div class="panel-frame">
       <main>
         <div class="card-layout">
           <section class="form-area" aria-labelledby="pageTitle">
@@ -456,9 +438,9 @@
         <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
       </main>
     </div>
-
-    <img class="character-art" src="assets/character-feedback.png" alt="">
   </div>
+
+  <img class="character-art" src="assets/character-feedback.png" alt="">
 
   <script>
     (function () {
