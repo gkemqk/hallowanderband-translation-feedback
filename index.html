@@ -416,6 +416,12 @@
               target="submitFrame"
             >
               <input id="metaInput" type="hidden" name="entry.719413114" value="">
+              <input type="hidden" name="fvv" value="1">
+              <input id="partialResponseInput" type="hidden" name="partialResponse" value="">
+              <input type="hidden" name="pageHistory" value="0">
+              <input id="fbzxInput" type="hidden" name="fbzx" value="">
+              <input type="hidden" name="dsdoc" value="true">
+              <input type="hidden" name="submissionTimestamp" value="-1">
 
               <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
               <textarea id="reportedLine" class="reported-line-field" name="entry.844724730" readonly></textarea>
@@ -449,6 +455,8 @@
       var text = normalizeText(params.get("text") || "");
 
       var metaInput = document.getElementById("metaInput");
+      var partialResponseInput = document.getElementById("partialResponseInput");
+      var fbzxInput = document.getElementById("fbzxInput");
       var reportedLine = document.getElementById("reportedLine");
       var form = document.getElementById("feedbackForm");
       var button = document.getElementById("submitButton");
@@ -456,8 +464,9 @@
       var submitFrame = document.getElementById("submitFrame");
       var submitted = false;
 
-      metaInput.value = meta;
+      metaInput.value = meta || "Unknown";
       reportedLine.value = text || "Empty";
+      prepareGoogleFormSubmissionToken();
 
       if (!meta || !text) {
         status.textContent = "Some report data is missing. You can still submit feedback.";
@@ -465,6 +474,7 @@
       }
 
       form.addEventListener("submit", function () {
+        prepareGoogleFormSubmissionToken();
         submitted = true;
         button.disabled = true;
         status.textContent = "Submitting...";
@@ -482,6 +492,21 @@
 
       function normalizeText(value) {
         return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+      }
+
+      function prepareGoogleFormSubmissionToken() {
+        var token = createGoogleFormToken();
+        fbzxInput.value = token;
+        partialResponseInput.value = '[null,null,"' + token + '"]';
+      }
+
+      function createGoogleFormToken() {
+        var token = "";
+        for (var i = 0; i < 19; i += 1) {
+          token += i === 0 ? String(Math.floor(Math.random() * 9) + 1) : String(Math.floor(Math.random() * 10));
+        }
+
+        return Math.random() < 0.5 ? "-" + token : token;
       }
     })();
   </script>
