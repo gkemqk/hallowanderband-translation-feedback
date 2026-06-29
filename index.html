@@ -36,6 +36,12 @@
       --button-shadow: rgba(24, 7, 39, 0.72);
       --error: #ffb3b3;
       --success: #b7f5c2;
+      --panel-width: 652px;
+      --panel-height: 763px;
+      --slice-left: 240px;
+      --slice-right: 259px;
+      --slice-top: 355px;
+      --slice-bottom: 293px;
     }
 
     * {
@@ -74,34 +80,89 @@
     .page-shell {
       position: relative;
       z-index: 1;
-      width: 100%;
-      max-width: 890px;
+      width: var(--panel-width);
+      max-width: none;
     }
 
     .brand-logo {
       position: relative;
-      z-index: 4;
+      z-index: 5;
       display: block;
-      width: min(250px, 54vw);
+      width: 300px;
       height: auto;
-      margin: 0 auto -48px;
+      margin: 0 auto -78px;
+      transform: translateX(18px);
       filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5));
     }
 
-    main {
+    .panel-frame {
       position: relative;
       z-index: 2;
-      width: 100%;
-      margin: 0 auto;
-      padding: 24px 36px 30px 18px;
-      border-style: solid;
-      border-color: transparent;
-      border-width: 90px 70px 70px 150px;
-      border-image-source: url("assets/panel-clipboard.png");
-      border-image-slice: 90 70 70 150 fill;
-      border-image-repeat: stretch;
+      width: var(--panel-width);
+      height: var(--panel-height);
+    }
+
+    .panel-slices {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: var(--slice-left) 1fr var(--slice-right);
+      grid-template-rows: var(--slice-top) 1fr var(--slice-bottom);
+      pointer-events: none;
+    }
+
+    .panel-slice {
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .panel-tl {
+      background-image: url("assets/panel-slices/panel-tl.png");
+    }
+
+    .panel-t {
+      background-image: url("assets/panel-slices/panel-t.png");
+    }
+
+    .panel-tr {
+      background-image: url("assets/panel-slices/panel-tr.png");
+    }
+
+    .panel-l {
+      background-image: url("assets/panel-slices/panel-l.png");
+    }
+
+    .panel-c {
+      background-image: url("assets/panel-slices/panel-c.png");
+    }
+
+    .panel-r {
+      background-image: url("assets/panel-slices/panel-r.png");
+    }
+
+    .panel-bl {
+      background-image: url("assets/panel-slices/panel-bl.png");
+    }
+
+    .panel-b {
+      background-image: url("assets/panel-slices/panel-b.png");
+    }
+
+    .panel-br {
+      background-image: url("assets/panel-slices/panel-br.png");
+    }
+
+    main {
+      position: absolute;
+      left: 118px;
+      top: 142px;
+      right: 66px;
+      bottom: 76px;
+      z-index: 2;
+      margin: 0;
+      padding: 0;
       background: transparent;
-      box-shadow: none;
     }
 
     .card-layout {
@@ -114,11 +175,11 @@
 
     .character-art {
       display: block;
-      position: fixed;
-      right: max(18px, calc((100vw - 980px) / 2));
-      bottom: 8px;
+      position: absolute;
+      right: -205px;
+      bottom: 4px;
       z-index: 3;
-      width: min(380px, 36vw);
+      width: 290px;
       height: auto;
       pointer-events: none;
       filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
@@ -127,7 +188,7 @@
     h1 {
       margin: 0 0 8px;
       color: #fff8fb;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1.25;
       text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
     }
@@ -135,13 +196,13 @@
     p {
       margin: 0 0 20px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.45;
     }
 
     label {
       display: block;
-      margin: 18px 0 8px;
+      margin: 14px 0 8px;
       color: #ffe6f0;
       font-size: 14px;
       font-weight: 700;
@@ -288,27 +349,57 @@
       border: 0;
     }
 
+    @media (min-width: 900px) {
+      .page-shell {
+        transform: translateX(-74px);
+      }
+    }
+
     @media (max-width: 720px) {
+      :root {
+        --panel-width: 500px;
+        --panel-height: 586px;
+        --slice-left: 184px;
+        --slice-right: 199px;
+        --slice-top: 273px;
+        --slice-bottom: 225px;
+      }
+
       body {
         align-items: flex-start;
         padding: 14px 12px 22px;
       }
 
+      .page-shell {
+        transform: translateX(-78px);
+      }
+
       .brand-logo {
-        width: min(210px, 54vw);
-        margin-bottom: -38px;
+        width: 230px;
+        margin-bottom: -60px;
+        transform: translateX(16px);
       }
 
       main {
-        padding: 16px 16px 24px 6px;
-        border-width: 62px 30px 46px 66px;
+        left: 90px;
+        top: 112px;
+        right: 48px;
+        bottom: 56px;
       }
 
       .character-art {
-        right: -12px;
-        bottom: -4px;
-        width: min(270px, 58vw);
+        right: -130px;
+        bottom: -2px;
+        width: 220px;
         opacity: 0.76;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 12px;
       }
     }
   </style>
@@ -317,40 +408,54 @@
   <div class="page-shell">
     <img class="brand-logo" src="assets/logo-clip.png" alt="Hallowanderband">
 
-    <main>
-      <div class="card-layout">
-        <section class="form-area" aria-labelledby="pageTitle">
-          <h1 id="pageTitle">Hallowanderband Transration Feedback</h1>
-          <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
-
-          <form
-            id="feedbackForm"
-            action="https://docs.google.com/forms/d/e/1FAIpQLScEvQ6uodP99uom6T4WwziKI_2lnnA0EKOSvDhf64i7ZYbKCg/formResponse"
-            method="POST"
-            target="submitFrame"
-          >
-            <input id="metaInput" type="hidden" name="entry.719413114" value="">
-
-            <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
-            <textarea id="reportedLine" class="reported-line-field" name="entry.844724730" readonly></textarea>
-
-            <label for="feedback">★ Your Feedback</label>
-            <textarea
-              id="feedback"
-              name="entry.1985870251"
-              required
-              placeholder="Write the corrected translation or what felt wrong."
-            ></textarea>
-
-            <button id="submitButton" type="submit">Submit Feedback</button>
-            <div id="status" class="status"></div>
-          </form>
-        </section>
-
+    <div class="panel-frame">
+      <div class="panel-slices" aria-hidden="true">
+        <div class="panel-slice panel-tl"></div>
+        <div class="panel-slice panel-t"></div>
+        <div class="panel-slice panel-tr"></div>
+        <div class="panel-slice panel-l"></div>
+        <div class="panel-slice panel-c"></div>
+        <div class="panel-slice panel-r"></div>
+        <div class="panel-slice panel-bl"></div>
+        <div class="panel-slice panel-b"></div>
+        <div class="panel-slice panel-br"></div>
       </div>
 
-      <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
-    </main>
+      <main>
+        <div class="card-layout">
+          <section class="form-area" aria-labelledby="pageTitle">
+            <h1 id="pageTitle">Hallowanderband Transration Feedback</h1>
+            <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
+
+            <form
+              id="feedbackForm"
+              action="https://docs.google.com/forms/d/e/1FAIpQLScEvQ6uodP99uom6T4WwziKI_2lnnA0EKOSvDhf64i7ZYbKCg/formResponse"
+              method="POST"
+              target="submitFrame"
+            >
+              <input id="metaInput" type="hidden" name="entry.719413114" value="">
+
+              <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
+              <textarea id="reportedLine" class="reported-line-field" name="entry.844724730" readonly></textarea>
+
+              <label for="feedback">★ Your Feedback</label>
+              <textarea
+                id="feedback"
+                name="entry.1985870251"
+                required
+                placeholder="Write the corrected translation or what felt wrong."
+              ></textarea>
+
+              <button id="submitButton" type="submit">Submit Feedback</button>
+              <div id="status" class="status"></div>
+            </form>
+          </section>
+
+        </div>
+
+        <iframe id="submitFrame" name="submitFrame" title="Submission target"></iframe>
+      </main>
+    </div>
 
     <img class="character-art" src="assets/character-feedback.png" alt="">
   </div>
