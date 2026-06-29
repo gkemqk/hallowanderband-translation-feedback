@@ -3,10 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hallowanderband Translation Feedback</title>
+  <title>Hallowanderband Transration Feedback</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Rubik:700&display=swap');
+    @font-face {
+      font-family: "Simple";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Danjo-bold-Regular.woff2") format("woff2");
+      font-weight: normal;
+      font-display: swap;
+    }
 
     :root {
       --bg: #1b2838;
@@ -24,6 +29,11 @@
       --dark-pink: #f9c4d2;
       --pink-border: #b18597;
       --pink-shadow: #ffe3e2;
+      --button-face: #3a155a;
+      --button-face-hover: #4a1b70;
+      --button-base: #1d0c2f;
+      --button-border: #8f68b3;
+      --button-shadow: rgba(24, 7, 39, 0.72);
       --error: #ffb3b3;
       --success: #b7f5c2;
     }
@@ -37,7 +47,7 @@
       margin: 0;
       min-height: 100%;
       color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Simple", Arial, Helvetica, sans-serif;
     }
 
     body {
@@ -65,12 +75,12 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 760px;
+      max-width: 700px;
     }
 
     .brand-logo {
       position: relative;
-      z-index: 2;
+      z-index: 4;
       display: block;
       width: min(360px, 76vw);
       height: auto;
@@ -138,6 +148,16 @@
       text-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
     }
 
+    .label-note {
+      margin-left: 8px;
+      color: rgba(224, 218, 230, 0.72);
+      font-size: 10px;
+      font-style: italic;
+      font-weight: normal;
+      text-shadow: none;
+      vertical-align: middle;
+    }
+
     textarea {
       display: block;
       width: 100%;
@@ -179,36 +199,57 @@
       margin-top: 20px;
       padding: 1.15em 2em;
       border: 0;
-      border: 2px solid var(--pink-border);
+      border: 2px solid var(--button-border);
       border-radius: 0.75em;
       outline: none;
-      background: var(--light-pink);
-      color: var(--ink);
+      background: var(--button-face);
+      color: #fff9ff;
       font-size: 16px;
-      font-family: "Rubik", Arial, Helvetica, sans-serif;
+      font-family: "Simple", Arial, Helvetica, sans-serif;
       font-weight: 700;
       text-transform: uppercase;
       text-decoration: none;
       vertical-align: middle;
       cursor: pointer;
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.26) inset;
+      transform-style: preserve-3d;
       transition:
         transform 150ms cubic-bezier(0, 0, 0.58, 1),
         background 150ms cubic-bezier(0, 0, 0.58, 1);
     }
 
     button::before {
-      display: none;
+      position: absolute;
+      inset: 0;
+      content: "";
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--button-base);
+      box-shadow: 0 0 0 2px var(--button-border), 0 0.55em 0 0 var(--button-shadow);
+      transform: translate3d(0, 0.62em, -1em);
+      transition:
+        transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
     }
 
     button:hover {
-      background: var(--pink);
-      transform: translateY(-1px);
+      background: var(--button-face-hover);
+      transform: translate(0, 0.18em);
+    }
+
+    button:hover::before {
+      box-shadow: 0 0 0 2px var(--button-border), 0 0.38em 0 0 var(--button-shadow);
+      transform: translate3d(0, 0.44em, -1em);
     }
 
     button:active {
-      background: var(--pink);
-      transform: translateY(1px);
+      background: var(--button-face-hover);
+      transform: translate(0, 0.56em);
+    }
+
+    button:active::before {
+      box-shadow: 0 0 0 2px var(--button-border), 0 0 var(--button-shadow);
+      transform: translate3d(0, 0, -1em);
     }
 
     button:disabled {
@@ -238,14 +279,6 @@
       width: 0;
       height: 0;
       border: 0;
-    }
-
-    @media (min-width: 900px) {
-      body {
-        justify-content: flex-start;
-        padding-left: clamp(20px, 8vw, 110px);
-        padding-right: 330px;
-      }
     }
 
     @media (max-width: 720px) {
@@ -279,7 +312,7 @@
     <main>
       <div class="card-layout">
         <section class="form-area" aria-labelledby="pageTitle">
-          <h1 id="pageTitle">Translation Feedback</h1>
+          <h1 id="pageTitle">Hallowanderband Transration Feedback</h1>
           <p>Please tell us what feels wrong, confusing, or unnatural about this line.</p>
 
           <form
@@ -290,7 +323,7 @@
           >
             <input id="metaInput" type="hidden" name="entry.719413114" value="">
 
-            <label for="reportedLine">Reported Line</label>
+            <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
             <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
 
             <label for="feedback">Your Feedback</label>
