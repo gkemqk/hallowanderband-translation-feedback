@@ -149,6 +149,8 @@
     }
 
     .label-note {
+      position: relative;
+      top: 2px;
       margin-left: 8px;
       color: rgba(224, 218, 230, 0.72);
       font-size: 10px;
@@ -190,6 +192,11 @@
     textarea[readonly] {
       background: var(--field-readonly);
       color: var(--ink);
+    }
+
+    textarea.reported-line-field {
+      background: rgba(34, 21, 48, 0.94);
+      color: #fff7fb;
     }
 
     button {
@@ -324,7 +331,7 @@
             <input id="metaInput" type="hidden" name="entry.719413114" value="">
 
             <label for="reportedLine">Reported Line <span class="label-note">[Auto-filled]</span></label>
-            <textarea id="reportedLine" name="entry.844724730" readonly></textarea>
+            <textarea id="reportedLine" class="reported-line-field" name="entry.844724730" readonly></textarea>
 
             <label for="feedback">★ Your Feedback</label>
             <textarea
@@ -362,7 +369,7 @@
       var submitted = false;
 
       metaInput.value = meta;
-      reportedLine.value = text;
+      reportedLine.value = text || "Empty";
 
       if (!meta || !text) {
         status.textContent = "Some report data is missing. You can still submit feedback.";
